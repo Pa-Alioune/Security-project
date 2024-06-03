@@ -41,4 +41,15 @@ class TokenService
             throw new Exception("Invalid token: " . $e->getMessage());
         }
     }
+
+
+    public function getPayload(string $token): array
+    {
+        try {
+            $decoded = JWT::decode($token, new Key($this->secretKey, 'HS256'));
+            return (array)$decoded->data;
+        } catch (Exception $e) {
+            throw new Exception("Invalid token: " . $e->getMessage());
+        }
+    }
 }

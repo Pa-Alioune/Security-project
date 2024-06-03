@@ -4,6 +4,9 @@ RewriteEngine On
 #RewriteCond %{REQUEST_METHOD} =POST
 RewriteRule ^register$ index.php?action=register [L]
 
+#RewriteCond %{REQUEST_METHOD} =GET
+RewriteRule ^userinfo$ index.php?action=userinfo [L]
+
 #RewriteCond %{REQUEST_METHOD} =POST
 RewriteRule ^login$ index.php?action=login [L]
 

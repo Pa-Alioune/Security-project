@@ -26,8 +26,10 @@ class UserController
 
                 if ($user) {
                     echo json_encode(UserDto::toUserDto($user));
+                    exit();
                 } else {
                     echo json_encode(["success" => false, "message" => "Failed to create user"]);
+                    exit();
                 }
             } catch (\Exception $e) {
                 echo json_encode(["success" => false, "message" => $e->getMessage()]);
@@ -50,9 +52,9 @@ class UserController
                 $missingFields[] = "password";
             }
             $secretKey = $_ENV['JWT_SECRET'];
-            die(var_dump($secretKey));
             http_response_code(400);
             echo json_encode(["success" => false, "message" => "Missing data. Required fields: " . implode(", ", $missingFields)]);
+            exit();
         }
     }
 
@@ -73,9 +75,17 @@ class UserController
             $jwt = $this->userService->login($email, $password);
 
             echo json_encode(['token' => $jwt]);
+            exit();
         } catch (\Exception $e) {
             http_response_code(500);
             echo json_encode(['success' => false, 'message' => $e->getMessage()]);
         }
+    }
+
+    function getUserInfo()
+    {
+
+        $this->userService->getUserInfo();
+        exit();
     }
 }

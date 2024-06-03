@@ -22,6 +22,9 @@ if ($action === "register") {
 }
 if ($action === "login") {
     $UserController->login();
+}
+if ($action === "userinfo") {
+    $UserController->getUserInfo();
 } else {
     $erreur->notFound();
 }
