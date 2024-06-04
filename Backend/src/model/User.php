@@ -9,22 +9,23 @@ class User extends Model
     private int $id;
     private string $firstname;
     private string $lastName;
-    private int $phoneNumber;
     private string $email;
     private string $password;
+    private bool $isOtpValidated;
+
 
     public function __construct(
         string $firstname,
         string $lastName,
-        int $phoneNumber,
         string $email,
+        bool $isOtpValidated = null,
         string $password = null,
-        int $id = null
+        int $id = null,
+
     ) {
         parent::__construct();
         $this->firstname = $firstname;
         $this->lastName = $lastName;
-        $this->phoneNumber = $phoneNumber;
         $this->email = $email;
         if ($id !== null) {
             $this->id = $id;
@@ -32,6 +33,9 @@ class User extends Model
         if ($password !== null) {
 
             $this->password = $password;
+        }
+        if ($isOtpValidated !== null) {
+            $this->isOtpValidated = $isOtpValidated;
         }
     }
 
@@ -43,6 +47,10 @@ class User extends Model
     {
         $userManager = new UserManager();
         return $userManager->getUserByEmail($email);
+    }
+    public  function confirm(): bool
+    {
+        return $this->userManager->setOtpValidated($this->getId());
     }
 
     // Autres méthodes getter et setter...
@@ -127,25 +135,7 @@ class User extends Model
         return $this;
     }
 
-    /**
-     * Get the value of phoneNumber
-     */
-    public function getPhoneNumber()
-    {
-        return $this->phoneNumber;
-    }
 
-    /**
-     * Set the value of phoneNumber
-     *
-     * @return  self
-     */
-    public function setPhoneNumber($phoneNumber)
-    {
-        $this->phoneNumber = $phoneNumber;
-
-        return $this;
-    }
 
     /**
      * Get the value of password
@@ -153,5 +143,25 @@ class User extends Model
     public function getPassword()
     {
         return $this->password;
+    }
+
+    /**
+     * Get the value of isOtpValidated
+     */
+    public function getIsOtpValidated()
+    {
+        return $this->isOtpValidated;
+    }
+
+    /**
+     * Set the value of isOtpValidated
+     *
+     * @return  self
+     */
+    public function setIsOtpValidated($isOtpValidated)
+    {
+        $this->isOtpValidated = $isOtpValidated;
+
+        return $this;
     }
 }

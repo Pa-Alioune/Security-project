@@ -19,7 +19,7 @@ class UserController
     {
         $data = json_decode(file_get_contents('php://input'), true);
 
-        if (isset($data['firstname']) && isset($data['lastname']) && isset($data['phoneNumber']) && isset($data['email']) && isset($data['password'])) {
+        if (isset($data['firstname']) && isset($data['lastname'])  && isset($data['email']) && isset($data['password'])) {
 
             try {
                 $user = $this->userService->createUser($data);
@@ -28,11 +28,15 @@ class UserController
                     echo json_encode(UserDto::toUserDto($user));
                     exit();
                 } else {
+
                     echo json_encode(["success" => false, "message" => "Failed to create user"]);
-                    exit();
+                    die();
                 }
             } catch (\Exception $e) {
+                http_response_code(400);
+
                 echo json_encode(["success" => false, "message" => $e->getMessage()]);
+                die();
             }
         } else {
             $missingFields = [];
@@ -42,25 +46,22 @@ class UserController
             if (!isset($data['lastname'])) {
                 $missingFields[] = "lastname";
             }
-            if (!isset($data['phoneNumber'])) {
-                $missingFields[] = "phoneNumber";
-            }
             if (!isset($data['email'])) {
                 $missingFields[] = "email";
             }
             if (!isset($data['password'])) {
                 $missingFields[] = "password";
             }
-            $secretKey = $_ENV['JWT_SECRET'];
             http_response_code(400);
             echo json_encode(["success" => false, "message" => "Missing data. Required fields: " . implode(", ", $missingFields)]);
-            exit();
+            die();
         }
     }
 
     public function login()
     {
         $data = json_decode(file_get_contents('php://input'), true);
+        // die(var_dump($this->getIpAddress()));
 
         $email = $data['email'] ?? null;
         $password = $data['password'] ?? null;
@@ -87,5 +88,20 @@ class UserController
 
         $this->userService->getUserInfo();
         exit();
+    }
+
+    function confirmOtp()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+
+
+        if (isset($data['otp'])) {
+            $this->userService->confirmeOtp($data['otp']);
+            die();
+        } else {
+            http_response_code(400);
+            echo json_encode(["success" => false, "message" => "Missing data. Required field : otp"]);
+            die();
+        }
     }
 }

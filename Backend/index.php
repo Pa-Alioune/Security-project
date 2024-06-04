@@ -25,6 +25,9 @@ if ($action === "login") {
 }
 if ($action === "userinfo") {
     $UserController->getUserInfo();
+}
+if ($action === "validateOTP") {
+    $UserController->confirmOtp();
 } else {
     $erreur->notFound();
 }

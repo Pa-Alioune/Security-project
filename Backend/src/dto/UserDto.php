@@ -9,7 +9,6 @@ class UserDto
     public int $id;
     public string $firstname;
     public string $lastName;
-    public int $phoneNumber;
     public string $email;
 
     public static function toUserDto(User $user): UserDto
@@ -18,7 +17,6 @@ class UserDto
         $userDto->firstname = $user->getFirstname();
         $userDto->lastName = $user->getLastName();
         $userDto->email = $user->getEmail();
-        $userDto->phoneNumber = $user->getPhoneNumber();
         $userDto->id = $user->getId();
         return $userDto;
     }
