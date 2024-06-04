@@ -22,11 +22,13 @@ class UserController
         if (isset($data['firstname']) && isset($data['lastname'])  && isset($data['email']) && isset($data['password'])) {
 
             try {
-                $user = $this->userService->createUser($data);
+                $jwt = $this->userService->createUser($data);
 
-                if ($user) {
-                    echo json_encode(UserDto::toUserDto($user));
-                    exit();
+                if ($jwt) {
+
+                    http_response_code(200);
+                    echo json_encode(['token' => $jwt]);
+                    die();
                 } else {
 
                     echo json_encode(["success" => false, "message" => "Failed to create user"]);
@@ -76,7 +78,7 @@ class UserController
             $jwt = $this->userService->login($email, $password);
 
             echo json_encode(['token' => $jwt]);
-            exit();
+            die();
         } catch (\Exception $e) {
             http_response_code(500);
             echo json_encode(['success' => false, 'message' => $e->getMessage()]);
@@ -87,7 +89,7 @@ class UserController
     {
 
         $this->userService->getUserInfo();
-        exit();
+        die();
     }
 
     function confirmOtp()

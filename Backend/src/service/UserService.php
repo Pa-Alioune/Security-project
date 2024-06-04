@@ -49,7 +49,7 @@ class UserService
         $user = $user->create($user, $password);
         $otp =  $this->otpManager->create($user->getId());
         $this->mailService->sendEmail($user->getEmail(), $otp);
-        return $user;
+        return  $this->tokenService->generateToken($user);
     }
 
     function login(string $email, string $password): string
