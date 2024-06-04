@@ -1,0 +1,49 @@
+/* styles/dashboard.qss */
+QWidget {
+    background-color: #F0F2F5;
+    color: #1C1E21;
+    font-family: 'Arial', sans-serif;
+}
+
+QLabel#dashboardTitleLabel {
+    color: #1877F2;
+    font-size: 32px;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+QPushButton {
+    background-color: #1877F2;
+    border: none;
+    padding: 15px;
+    border-radius: 5px;
+    color: #FFFFFF;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+QPushButton:hover {
+    background-color: #166FE5;
+}
+
+QPushButton#viewButton, QPushButton#editButton, QPushButton#deleteButton {
+    background-color: #42A5F5;
+    color: white;
+    font-size: 14px;
+    padding: 20px;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+QPushButton#viewButton:hover, QPushButton#editButton:hover, QPushButton#deleteButton:hover {
+    background-color: #1E88E5;
+}
+
+QListWidget {
+    background-color: #FFFFFF;
+    border: 1px solid #DDDFE2;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+}
